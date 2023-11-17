@@ -1,0 +1,9 @@
+{
+    "clearMocks": true,
+    "moduleNameMapper": {
+        "@/(.*)": [
+            "<rootDir>/src/fiddles/$1"
+        ]
+    },
+    "preset": "ts-jest"
+}

@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"allowJs": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"resolveJsonModule": true,
+		"noImplicitReturns": true,
+		"esModuleInterop": true,
+		"target": "esnext",
+		"module": "commonjs",
+		"baseUrl": "src",
+		"paths": {
+			"@/*": ["fiddles/*"]
+		}
+	},
+	"include": [
+		"./src/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
