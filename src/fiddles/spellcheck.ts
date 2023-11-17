@@ -6,7 +6,7 @@ interface Node<T> {
 	isWord?: boolean;
 }
 
-class Trie<T> {
+class Trie {
 	private readonly head: Node<string>;
 
 	constructor() {
