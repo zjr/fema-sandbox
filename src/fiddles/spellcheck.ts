@@ -19,7 +19,7 @@ class Trie {
 		return i;
 	}
 
-	addWord(word: string) {
+	add(word: string) {
 		let node = this.head;
 		for (let i = 0; i < word.length; i++) {
 			const charIdx = this.getCharIdx(word, i);
@@ -29,7 +29,7 @@ class Trie {
 		}
 	}
 
-	findWord(
+	has(
 		word: string,
 		index: number = 0,
 		curr: Node<string> = this.head,
@@ -42,21 +42,22 @@ class Trie {
 
 		index++;
 
-		return this.findWord(word, index, childNode);
+		return this.has(word, index, childNode);
 	}
 }
 
 export default async function spellcheck(
 	dictPath: string,
 	inputPath: string,
+	useSet?: boolean,
 ): Promise<string[]> {
 	const dictRaw = await fs.readFile(dictPath, { encoding: "utf-8" });
 	const inputRaw = await fs.readFile(inputPath, { encoding: "utf-8" });
 
 	const dictArr = dictRaw.split("\n");
-	const dictTrie = new Trie();
+	const dictLook = useSet ? new Set() : new Trie();
 
-	dictArr.forEach((word) => dictTrie.addWord(word.toLowerCase()));
+	dictArr.forEach((word) => dictLook.add(word.toLowerCase()));
 
 	// split uses separators found in the input but in real world we'd want to
 	// define this further…
@@ -67,7 +68,7 @@ export default async function spellcheck(
 		// replacer probably too aggressive real-world
 		const sanitizedWord = inputArr[i].toLowerCase().replace(/[^a-z]/, "");
 
-		if (!dictTrie.findWord(sanitizedWord)) {
+		if (!dictLook.has(sanitizedWord)) {
 			results.push(sanitizedWord);
 		}
 	}

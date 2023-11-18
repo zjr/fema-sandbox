@@ -77,10 +77,12 @@ import spellcheck from "@/spellcheck";
 
 const expected = ["limitationns", "costy"];
 
-test("check spelling", async function () {
-	await setup();
-	let result = await spellcheck("dict.txt", "input.txt");
-	expect(result.length).toEqual(expected.length);
-	expect(result[0]).toEqual(expected[0]);
-	expect(result[1]).toEqual(expected[1]);
+beforeAll(async () => await setup());
+
+test("check spelling with trie", async function () {
+	expect(await spellcheck("dict.txt", "input.txt")).toEqual(expected);
+});
+
+test("check spelling with hash map", async function () {
+	expect(await spellcheck("dict.txt", "input.txt", true)).toEqual(expected);
 });
